@@ -1,6 +1,8 @@
 {
-  "name": "my-app",
+  "name": "Pinspire",
   "version": "0.1.0",
+  "description": "Visual discovery platform inspired by Pinterest, built with Next.js App Router. Features masonry layout, server-side fetching with caching and revalidation, form handling with React Hook Form + Zod, image optimization using next/image, and global state management with Context + useReducer.",
+  "author": "Emanuel Arévalo Martínez",
   "private": true,
   "scripts": {
     "dev": "next dev",
