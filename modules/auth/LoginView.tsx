@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -9,66 +11,131 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
+
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { LoginType } from "@/types/loginType";
+import { LoginSchema } from "@/schemas/loginSchema";
+import { useApp } from "@/store/ContextProvider";
+import { useEffect, useState } from "react";
 
 export function LoginView() {
+
+  const [open, setOpen] = useState(false);
+
+  const { state, login } = useApp();
+
+  useEffect(() => {
+    if (state.status === "authenticated") {
+      toast.success("Sesión iniciada con éxito");
+      setOpen(false);
+      form.reset();
+    }
+  
+    if (state.status === "error") {
+      toast.error(state.error);
+    }
+  }, [state.status]);
+  
+
+  const form = useForm<LoginType>({
+    resolver: zodResolver(LoginSchema),
+
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
+
+  function onSubmit(values: LoginType) {
+    login(values);
+  }
+
   return (
     <>
-      <Dialog>
-        <form>
-          <DialogTrigger asChild>
-            <Button
-              className="text-white rounded-xl"
-              variant="destructive"
-              size="lg"
-              onClick={() => {
-                console.log("holaaa login");
-              }}
-            >
-              Iniciar Sesión
-            </Button>
-          </DialogTrigger>
-          <DialogContent>
-            <DialogHeader className="flex items-center">
-              <DialogTitle>Bienvenido a Pinspire</DialogTitle>
-              <DialogDescription>
-                
-              </DialogDescription>
-            </DialogHeader>
-            <div className="w-full grid gap-4">
-              <div className="grid gap-3">
-                <Label htmlFor="email">Correo</Label>
-                <Input id="email" name="email" />
-              </div>
-              <div className="grid gap-2">
-                <div className="flex items-center">
-                  <Label htmlFor="password">Contraseña</Label>
-                </div>
-                <Input id="password" type="password" required />
-                <a
-                  href="#"
-                  className="mr-auto inline-block text-sm underline-offset-4 hover:underline text-blue-600"
-                >
-                  ¿Olvidaste tu contraseña?
-                </a>
-              </div>
+      <Dialog
+      open={open}
+      onOpenChange={(value) => {
+        setOpen(value);
+        if (!value) form.reset();
+      }}
+      >
+        <DialogTrigger asChild>
+          <Button
+            className="text-white rounded-xl"
+            variant="destructive"
+            size="lg"
+          >
+            Iniciar Sesión
+          </Button>
+        </DialogTrigger>
+        <DialogContent>
+          <DialogHeader className="flex items-center">
+            <DialogTitle>Bienvenido a Pinspire</DialogTitle>
+            <DialogDescription></DialogDescription>
+          </DialogHeader>
 
-              <div className="flex flex-col font-medium text-[12px] text-center space-y-2">
-                <p className="text-black cursor-pointer font-semibold">
-                ¿Aún no estás en Pinspire? Regístrate
-                </p>
-                <p className="text-gray-500">
-                Si continúas, aceptas los Términos del servicio de Pinspire y confirmas que has leído nuestra Política de privacidad. Aviso de recopilación de datos
-                </p>
-              </div>
-            </div>
-            <DialogFooter>
-              <Button className="w-full bg-red-600 text-white" type="submit">
-                Iniciar Sesión
-              </Button>
-            </DialogFooter>
-          </DialogContent>
-        </form>
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel> Correo Electrónico </FormLabel>
+                    <FormControl>
+                      <Input 
+                        type="email" 
+                        placeholder="Contraseña" 
+                        {...field} 
+                      />
+                    </FormControl>
+                    <FormDescription></FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="password"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Contraseña </FormLabel>
+                    <FormControl>
+                      <Input
+                        type="password"
+                        placeholder="Contraseña"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormDescription className="cursor-pointer underline-offset-4 hover:underline text-blue-600">
+                      ¿Olvidaste tu contraseña?
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <DialogFooter>
+                <Button className="w-full bg-red-600 text-white" type="submit">
+                  Iniciar Sesión
+                </Button>
+              </DialogFooter>
+            </form>
+          </Form>
+        </DialogContent>
       </Dialog>
     </>
   );
