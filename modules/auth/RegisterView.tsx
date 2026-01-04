@@ -3,7 +3,6 @@
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
-  DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
@@ -11,9 +10,18 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { toast } from "sonner";
 
 import { Calendar } from "@/components/ui/calendar";
 import {
@@ -22,15 +30,55 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { ChevronDownIcon } from "lucide-react";
+import { useForm } from "react-hook-form";
+import { RegisterType } from "@/types/registerType";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { RegisterSchema } from "@/schemas/registerSchema";
+import { useApp } from "@/store/ContextProvider";
 
 export function RegisterView() {
-  const [open, setOpen] = useState(false);
-  const [date, setDate] = useState<Date | undefined>(undefined);
+
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [calendarOpen, setCalendarOpen] = useState(false);
+
+  const { state, register } = useApp();
+
+  useEffect(() => {
+      if (state.status === "authenticated" && state.view === "register") {
+        toast.success("Registro realizado con éxito");
+        setDialogOpen(false);
+        form.reset();
+      }
+    
+      if (state.status === "error") {
+        toast.error(state.error);
+      }
+    }, [state.status]);
+
+  const form = useForm<RegisterType>({
+
+    resolver: zodResolver(RegisterSchema),
+
+    defaultValues: {
+      email: "",
+      password: "",
+      birthDate: null,
+    },
+  });
+
+  function onSubmit(values: RegisterType) {
+    register(values);
+  }
 
   return (
     <>
-      <Dialog>
-        <form>
+      <Dialog
+      open={dialogOpen}
+      onOpenChange={(value) => {
+        setDialogOpen(value);
+        if (!value) form.reset();
+      }}
+      >
           <DialogTrigger asChild>
             <Button
               className="text-black rounded-xl"
@@ -40,81 +88,131 @@ export function RegisterView() {
               Registrarse
             </Button>
           </DialogTrigger>
-          <DialogContent className="">
+          <DialogContent>
             <DialogHeader className="flex items-center">
               <DialogTitle>Bienvenido a Pinspire</DialogTitle>
               <DialogDescription>
                 Encuentra nuevas ideas para probar
               </DialogDescription>
             </DialogHeader>
-            <div className="w-full grid gap-4">
-              <div className="grid gap-3">
-                <Label htmlFor="email">Correo</Label>
-                <Input id="email" name="email" />
-              </div>
-              <div className="grid gap-2">
-                <div className="flex items-center">
-                  <Label htmlFor="password">Contraseña</Label>
-                </div>
-                <Input id="password" type="password" required />
-                <a
-                  href="#"
-                  className="mx-auto inline-block text-sm underline-offset-4 text-gray-500"
-                >
-                  Usa 8 o más letras, números y símbolos
-                </a>
-              </div>
 
-              <div className="flex flex-col gap-3">
-                <Label htmlFor="date" className="px-1">
-                  Fecha de nacimiento
-                </Label>
-                <Popover open={open} onOpenChange={setOpen}>
-                  <PopoverTrigger asChild>
-                    <Button
-                      variant="outline"
-                      id="date"
-                      className="w-full justify-between font-normal"
+            <Form {...form}>
+              <form
+                onSubmit={form.handleSubmit(onSubmit)}
+                className="space-y-8"
+              >
+                <FormField
+                  control={form.control}
+                  name="email"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel> Correo Electrónico </FormLabel>
+                      <FormControl>
+                        <Input
+                          type="email"
+                          placeholder="Correo Electrónico"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormDescription></FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="password"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Contraseña </FormLabel>
+                      <FormControl>
+                        <Input
+                          type="password"
+                          placeholder="Contraseña"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormDescription>
+                      </FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <div className="flex flex-col gap-3">
+                <FormField
+                  control={form.control}
+                  name="birthDate"
+                  render={ ({ field }) => (
+                    <FormItem>
+                       <FormLabel htmlFor="date" className="px-1">  Fecha de nacimiento </FormLabel>
+                       <FormControl>
+                       <Popover open={calendarOpen} onOpenChange={setCalendarOpen}>
+                    <PopoverTrigger asChild>
+                      <Button
+                        variant="outline"
+                        id="date"
+                        className="w-full justify-between font-normal"
+                      >
+                        {field.value
+                          ? field.value.toLocaleDateString()
+                          : "Selecciona la fecha"}
+                        <ChevronDownIcon />
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent
+                      className="w-full overflow-hidden p-0"
+                      align="end"
                     >
-                      {date ? date.toLocaleDateString() : "Selecciona la fecha"}
-                      <ChevronDownIcon />
-                    </Button>
-                  </PopoverTrigger>
-                  <PopoverContent
-                    className="w-full overflow-hidden p-0"
-                    align="end"
-                  >
-                    <Calendar
-                    className="w-full"
-                      mode="single"
-                      selected={date}
-                      captionLayout="dropdown"
-                      onSelect={(date) => {
-                        setDate(date);
-                        setOpen(false);
-                      }}
-                    />
-                  </PopoverContent>
-                </Popover>
-              </div>
+                      <Calendar
+                        className="w-full"
+                        mode="single"
+                        selected={field.value ?? undefined}
+                        captionLayout="dropdown"
+                        onSelect={(date) => {
+                          field.onChange(date ?? null);
+                          setCalendarOpen(false);
+                        }}
+                        {...field}
+                      />
+                    </PopoverContent>
+                  </Popover>
+                      </FormControl>
+                      <FormDescription></FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                </div>
 
-              <div className="flex flex-col font-medium text-[12px] text-center space-y-2">
-                
-                <p className="text-gray-500">
-                Si continúas, aceptas los Términos del servicio de Pinspire y confirmas que has leído nuestra Política de privacidad. Aviso de recopilación de datos.
-                </p>
-                <p className="text-black cursor-pointer">
-                ¿Ya eres miembro? <span className="text-black font-semibold"> Iniciar sesión </span> 
-                </p>
-              </div>
-            </div>
-            <DialogFooter>
-              <Button className="w-full bg-red-600 text-white" type="submit">
-                Continuar
-              </Button>
-            </DialogFooter>
+                <div className="w-full grid gap-4">
+                  <div className="flex flex-col font-medium text-[12px] text-center space-y-2">
+                    <p className="text-gray-500">
+                      Si continúas, aceptas los Términos del servicio de
+                      Pinspire y confirmas que has leído nuestra Política de
+                      privacidad. Aviso de recopilación de datos.
+                    </p>
+                    <p className="text-black">
+                      ¿Ya eres miembro?
+                      <span className="text-black font-semibold pl-1 cursor-pointer">
+                        Iniciar sesión
+                      </span>
+                    </p>
+                  </div>
+                </div>
+
+                <DialogFooter>
+                  <Button
+                    className="w-full bg-red-600 text-white"
+                    type="submit"
+                  >
+                    Continuar
+                  </Button>
+                </DialogFooter>
+              </form>
+            </Form>
           </DialogContent>
-        </form>
       </Dialog>
     </>
   );

@@ -32,14 +32,19 @@ import { useEffect, useState } from "react";
 
 export function LoginView() {
 
-  const [open, setOpen] = useState(false);
+  // TODO
+  // hacer peticiones a la api de unpash y mostrarlo en una image de next
+  // alñadir responsive
+
+
+   const [dialogOpen, setDialogOpen] = useState(false);
 
   const { state, login } = useApp();
 
   useEffect(() => {
-    if (state.status === "authenticated") {
+    if (state.status === "authenticated" && state.view === "login") {
       toast.success("Sesión iniciada con éxito");
-      setOpen(false);
+      setDialogOpen(false);
       form.reset();
     }
   
@@ -65,9 +70,9 @@ export function LoginView() {
   return (
     <>
       <Dialog
-      open={open}
+      open={dialogOpen}
       onOpenChange={(value) => {
-        setOpen(value);
+        setDialogOpen(value);
         if (!value) form.reset();
       }}
       >
@@ -97,7 +102,7 @@ export function LoginView() {
                     <FormControl>
                       <Input 
                         type="email" 
-                        placeholder="Contraseña" 
+                        placeholder="Correo Electrónico" 
                         {...field} 
                       />
                     </FormControl>
@@ -127,6 +132,17 @@ export function LoginView() {
                   </FormItem>
                 )}
               />
+
+<div className="w-full grid gap-4">
+                  <div className="flex flex-col font-medium text-[12px] text-center space-y-2">
+                    <p className="text-black font-semibold cursor-pointer">
+                    ¿Aún no estás en Pinspire? Regístrate
+                    </p>
+                    <p className="text-gray-500">
+                      Si continúas, aceptas los Términos del servicio de Pinspire y confirmas que has leído nuestra Política de privacidad. Aviso de recopilación de datos.
+                    </p>
+                  </div>
+                </div>
 
               <DialogFooter>
                 <Button className="w-full bg-red-600 text-white" type="submit">
