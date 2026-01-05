@@ -68,6 +68,8 @@ This project is intentionally small and simple, designed as a learning playgroun
 
 ## 📂 Project Structure
 
+
+```text
 Pinspire/
 ├─ app/                    # Next.js App Router pages
 │  ├─ explore/             # Image exploration page
@@ -105,6 +107,7 @@ Pinspire/
 │  └─ icons/
 │     └─ pinspire-icon.png
 └─ README.md
+```
 
 
 ## 🔑 Environment Variables
@@ -124,15 +127,16 @@ A .env.example file should be committed instead of real credentials to show requ
 ## ▶️ Getting Started
 
 Install dependencies:
-
 ```bash
 pnpm install
 ```
 
+Run the development server:
 ```bash
 pnpm dev
 ```
 
+Open:
 ```bash
 http://localhost:3000
 ```
