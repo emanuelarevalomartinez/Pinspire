@@ -183,7 +183,7 @@ Feedback, features & issues welcome! 🚀
 
 ## 📝 License
 
-Apache License 2.0 — free for personal and commercial use.
+This project is licensed under the Mozilla Public License 2.0.
 
 ## 🔗 Repository
 

@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "description": "Pinspire is an experimental mini web application inspired by Pinterest, focused on exploring and discovering images in a simple, fast and minimalist way.",
   "author": "Emanuel Arévalo Martínez",
+  "license": "MPL-2.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
