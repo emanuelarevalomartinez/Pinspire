@@ -1,36 +1,186 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Pinspire
 
-## Getting Started
+**Minimal Pinterest-inspired web app built with Next.js (App Router) and Unsplash API.**
 
-First, run the development server:
+Pinspire is a small experimental web application created to practice modern Next.js features such as the App Router, server/client components, URL-based state, API routes, and external data fetching.
+The app takes visual inspiration from Pinterest but focuses on a minimal, clean, and educational implementation, not a full clone.
+
+## ✨ Overview
+
+Pinspire allows users to explore image-based content fetched from the Unsplash API, navigate through pages using URL query parameters, and interact with a modular, scalable front-end architecture.
+
+This project is intentionally small and simple, designed as a learning playground rather than a production-ready social platform.
+
+## 🧠 Key Concepts Practiced
+
+* Next.js 13+ App Router
+
+* Server & Client Components
+
+* API Routes (app/api)
+
+* External API integration (Unsplash)
+
+* URL state management with nuqs
+
+* Modular folder architecture
+
+* Reusable UI components
+
+* Basic authentication structure (WIP)
+
+* Tailwind CSS + shadcn/ui (Radix primitives)
+
+## 🚀 Features
+
+🖼️ Image feed powered by Unsplash API
+
+🔎 Image exploration and pagination
+
+🔗 URL-based pagination state (?page=)
+
+🧩 Modular UI and feature-based structure
+
+🎨 Minimal Pinterest-like layout
+
+⚡ Optimized images with next/image
+
+🧱 Scalable folder organization
+
+
+## 🛠️ Tech Stack
+
+* Framework: Next.js 13+ (App Router)
+
+* Language: TypeScript
+
+* Styling: Tailwind CSS
+
+* UI Components: shadcn/ui (built on Radix UI primitives)
+
+* Forms & Validation: React Hook Form + Zod
+
+* State / URL State: nuqs
+
+* Image Source: Unsplash API
+
+* Package Manager: pnpm
+
+## 📂 Project Structure
+
+Pinspire/
+├─ app/                    # Next.js App Router pages
+│  ├─ explore/             # Image exploration page
+│  ├─ create/              # Create view (WIP)
+│  ├─ dashboard/           # Dashboard view
+│  ├─ companies/           # Companies page
+│  ├─ news/                # News page
+│  ├─ info/                # Info page
+│  ├─ layout.tsx
+│  └─ page.tsx
+│
+├─ components/
+│  └─ ui/                  # shadcn/ui components (Radix + Tailwind)
+│
+├─ modules/                # Feature-based views
+│  ├─ home/
+│  ├─ auth/
+│  └─ dashboard/
+│
+├─ services/
+│  ├─ api.ts               # API client setup
+│  └─ unsplash.service.ts  # Unsplash API logic
+│
+├─ shared/
+│  ├─ cards/
+│  │  └─ CardImageUnsplash.tsx
+│  └─ inputs/
+│     └─ Search.tsx
+│
+├─ schemas/                # Zod validation schemas
+├─ store/                  # Auth state & context
+├─ interfaces/             # TypeScript interfaces
+├─ types/                  # Form & domain types
+├─ public/
+│  └─ icons/
+│     └─ pinspire-icon.png
+└─ README.md
+
+
+## 🔑 Environment Variables
+
+This project uses environment variables for the Unsplash API.
+
+Create a .env.local file:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+NEXT_PUBLIC_UNSPLASH_ACCESS_KEY=your_unsplash_access_key_here
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+#### 📌 Important
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+A .env.example file should be committed instead of real credentials to show required variables.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## ▶️ Getting Started
 
-## Learn More
+Install dependencies:
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+pnpm install
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+pnpm dev
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+http://localhost:3000
+```
 
-## Deploy on Vercel
+## 🧪 Purpose of the Project
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Pinspire is not intended to be a full Pinterest clone.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+It exists to:
+
+1. Practice real-world Next.js patterns
+
+2. Experiment with project structure and modularity
+
+3. Learn API integration and caching behavior
+
+4. Improve UI composition and image handling
+
+5. Serve as a personal reference project
+
+## 📌 Future Improvements (Optional)
+
+* User authentication flow
+
+* Infinite scrolling
+
+* Masonry layout
+
+* Image saving / liking
+
+* Better error handling
+
+* Improved accessibility
+
+## 🤝 Contributing
+
+1. Fork
+2. New branch
+3. Commit (Conventional Commits preferred)
+4. Pull Request
+
+Feedback, features & issues welcome! 🚀
+
+
+## 📝 License
+
+Apache License 2.0 — free for personal and commercial use.
+
+## 🔗 Repository
+
+[GitHub - Pinspire](https://github.com/emanuelarevalomartinez/Pinspire)
