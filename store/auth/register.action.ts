@@ -1,6 +1,5 @@
 import { RegisterType } from "@/types/registerType";
 
-
 export async function registerAction(data: RegisterType) {
   // validar credenciales
   // crear sesión / token

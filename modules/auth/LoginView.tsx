@@ -31,13 +31,7 @@ import { useApp } from "@/store/ContextProvider";
 import { useEffect, useState } from "react";
 
 export function LoginView() {
-
-  // TODO
-  // hacer peticiones a la api de unpash y mostrarlo en una image de next
-  // alñadir responsive
-
-
-   const [dialogOpen, setDialogOpen] = useState(false);
+  const [dialogOpen, setDialogOpen] = useState(false);
 
   const { state, login } = useApp();
 
@@ -47,12 +41,11 @@ export function LoginView() {
       setDialogOpen(false);
       form.reset();
     }
-  
+
     if (state.status === "error") {
       toast.error(state.error);
     }
   }, [state.status]);
-  
 
   const form = useForm<LoginType>({
     resolver: zodResolver(LoginSchema),
@@ -70,11 +63,11 @@ export function LoginView() {
   return (
     <>
       <Dialog
-      open={dialogOpen}
-      onOpenChange={(value) => {
-        setDialogOpen(value);
-        if (!value) form.reset();
-      }}
+        open={dialogOpen}
+        onOpenChange={(value) => {
+          setDialogOpen(value);
+          if (!value) form.reset();
+        }}
       >
         <DialogTrigger asChild>
           <Button
@@ -100,10 +93,10 @@ export function LoginView() {
                   <FormItem>
                     <FormLabel> Correo Electrónico </FormLabel>
                     <FormControl>
-                      <Input 
-                        type="email" 
-                        placeholder="Correo Electrónico" 
-                        {...field} 
+                      <Input
+                        type="email"
+                        placeholder="Correo Electrónico"
+                        {...field}
                       />
                     </FormControl>
                     <FormDescription></FormDescription>
@@ -133,16 +126,18 @@ export function LoginView() {
                 )}
               />
 
-<div className="w-full grid gap-4">
-                  <div className="flex flex-col font-medium text-[12px] text-center space-y-2">
-                    <p className="text-black font-semibold cursor-pointer">
+              <div className="w-full grid gap-4">
+                <div className="flex flex-col font-medium text-[12px] text-center space-y-2">
+                  <p className="text-black font-semibold cursor-pointer">
                     ¿Aún no estás en Pinspire? Regístrate
-                    </p>
-                    <p className="text-gray-500">
-                      Si continúas, aceptas los Términos del servicio de Pinspire y confirmas que has leído nuestra Política de privacidad. Aviso de recopilación de datos.
-                    </p>
-                  </div>
+                  </p>
+                  <p className="text-gray-500">
+                    Si continúas, aceptas los Términos del servicio de Pinspire
+                    y confirmas que has leído nuestra Política de privacidad.
+                    Aviso de recopilación de datos.
+                  </p>
                 </div>
+              </div>
 
               <DialogFooter>
                 <Button className="w-full bg-red-600 text-white" type="submit">

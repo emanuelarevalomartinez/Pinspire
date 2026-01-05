@@ -2,7 +2,6 @@ import { AuthAction } from "./actions";
 import { AuthState, initialAuthState } from "./state";
 
 export function authReducer(state: AuthState, action: AuthAction): AuthState {
-  
   switch (action.type) {
     case "LOGIN_START":
       return { status: "loading", view: "login" };

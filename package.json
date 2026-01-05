@@ -1,7 +1,7 @@
 {
   "name": "Pinspire",
   "version": "0.1.0",
-  "description": "Visual discovery platform inspired by Pinterest, built with Next.js App Router. Features masonry layout, server-side fetching with caching and revalidation, form handling with React Hook Form + Zod, image optimization using next/image, and global state management with Context + useReducer.",
+  "description": "Pinspire is an experimental mini web application inspired by Pinterest, focused on exploring and discovering images in a simple, fast and minimalist way.",
   "author": "Emanuel Arévalo Martínez",
   "private": true,
   "scripts": {
@@ -25,6 +25,7 @@
     "lucide-react": "^0.562.0",
     "next": "16.1.1",
     "next-themes": "^0.4.6",
+    "nuqs": "^2.8.6",
     "react": "19.2.3",
     "react-day-picker": "^9.13.0",
     "react-dom": "19.2.3",

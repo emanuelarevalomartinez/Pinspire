@@ -1,6 +1,6 @@
 export type AuthState = {
   status: "idle" | "loading" | "authenticated" | "error";
-  view? : "login" | "register" | "none";
+  view?: "login" | "register" | "none";
   error?: string;
 };
 

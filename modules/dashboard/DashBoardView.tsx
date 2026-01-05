@@ -1,15 +1,11 @@
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { LoginView } from "../auth/LoginView";
 import { RegisterView } from "../auth/RegisterView";
 import Link from "next/link";
+import { Search } from "@/shared/inputs/Search";
 
 export function DashBoardView() {
-  // TODO me quede terminando de estilizar el register y el login
-  // comenzar a aplicar las validaciones a dichos formularios con zod
-  // añadir un nuevo formulario mucho mas extenso y dedicado a otra cosa
-
   return (
     <header className="flex w-full z-50 backdrop-blur border-b">
       <div className="flex text-2xl w-full items-center gap-4 px-6 py-3">
@@ -36,30 +32,43 @@ export function DashBoardView() {
         </div>
 
         <div className="flex flex-1">
-          <Input
-            type="search"
-            placeholder="Encuentra ideas sobre cenas fáciles, moda, etc."
-          />
+          <Search />
         </div>
 
         <div className="flex gap-2">
           <Link href={"/info"}>
-            <Button className="text-blue-600 cursor-pointer" variant="link" size="lg">
+            <Button
+              className="text-blue-600 cursor-pointer"
+              variant="link"
+              size="lg"
+            >
               Info
             </Button>
           </Link>
           <Link href={"/companies"}>
-            <Button className="text-blue-600 cursor-pointer" variant="link" size="lg">
+            <Button
+              className="text-blue-600 cursor-pointer"
+              variant="link"
+              size="lg"
+            >
               Empresas
             </Button>
           </Link>
           <Link href={"/create"}>
-            <Button className="text-blue-600 cursor-pointer" variant="link" size="lg">
+            <Button
+              className="text-blue-600 cursor-pointer"
+              variant="link"
+              size="lg"
+            >
               Crear
             </Button>
           </Link>
           <Link href={"/news"}>
-            <Button className="text-blue-600 cursor-pointer" variant="link" size="lg">
+            <Button
+              className="text-blue-600 cursor-pointer"
+              variant="link"
+              size="lg"
+            >
               Noticias
             </Button>
           </Link>
